@@ -1,0 +1,16 @@
+{
+  "name": "berechnungs-tool",
+  "version": "1.0.0",
+  "description": "Ein Berechnungs-Tool mit Node.js und CouchDB",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nano": "^10.0.0",
+    "dotenv": "^16.0.3"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Amar",
+  "license": "MIT"
+}
