@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berechnungs-Tool</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <title>Game of Life</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; margin-top: 30px; }
+        table { margin: 0 auto; border-collapse: collapse; }
+        td {
+          width: 20px;
+          height: 20px;
+          border: 1px solid #ccc;
+        }
+        .alive { background-color: black; }
+    </style>
 </head>
 <body>
-    <h1>Willkommen beim Berechnungs-Tool</h1>
-    <a href="calculations.html">Alle Berechnungen anzeigen</a>
+<h1>Game of Life</h1>
+<button onclick="start()">Start</button>
+<button onclick="next()">Next</button>
+<button onclick="save()">Save</button>
+<button onclick="load()">Load</button>
+<div id="grid-container"></div>
+
+<script src="script.js"></script>
 </body>
 </html>

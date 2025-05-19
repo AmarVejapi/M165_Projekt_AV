@@ -1,16 +1,14 @@
 {
-  "name": "berechnungs-tool",
+  "name": "game-of-life-couchdb",
   "version": "1.0.0",
-  "description": "Ein Berechnungs-Tool mit Node.js und CouchDB",
+  "description": "Game of Life mit CouchDB und Node.js",
   "main": "server.js",
-  "dependencies": {
-    "express": "^4.18.2",
-    "nano": "^10.0.0",
-    "dotenv": "^16.0.3"
-  },
   "scripts": {
     "start": "node server.js"
   },
-  "author": "Amar",
-  "license": "MIT"
+  "dependencies": {
+    "axios": "^1.6.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  }
 }
