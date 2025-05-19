@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-let game = new Game(10, 10); // 10x10 Grid
+let game = new Game(10, 10);
 
 app.post('/start', (req, res) => {
   const { rows, cols } = req.body;

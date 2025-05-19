@@ -1,12 +1,11 @@
 const axios = require('axios');
 
-// Konfiguration für CouchDB
-const COUCHDB_URL = 'http://127.0.0.1:5984';
+require('dotenv').config();
+const COUCHDB_URL = process.env.COUCHDB_URL;
 const DB_NAME = 'gameoflife';
 const DOC_ID = 'latest_game';
 
 async function saveGame(grid) {
-  // Vorheriges Dokument holen (falls vorhanden), um _rev zu bekommen
   let existing = {};
   try {
     const res = await axios.get(`${COUCHDB_URL}/${DB_NAME}/${DOC_ID}`);

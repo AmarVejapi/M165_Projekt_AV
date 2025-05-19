@@ -7,21 +7,22 @@
         body { font-family: sans-serif; text-align: center; margin-top: 30px; }
         table { margin: 0 auto; border-collapse: collapse; }
         td {
-          width: 20px;
-          height: 20px;
-          border: 1px solid #ccc;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
         }
         .alive { background-color: black; }
     </style>
 </head>
 <body>
-<h1>Game of Life</h1>
-<button onclick="start()">Start</button>
-<button onclick="next()">Next</button>
-<button onclick="save()">Save</button>
-<button onclick="load()">Load</button>
-<div id="grid-container"></div>
-
-<script src="script.js"></script>
+    <h1>Game of Life</h1>
+    <button onclick="toggleRun()">Start/Pause</button>
+    <button onclick="next()">Next</button>
+    <button onclick="save()">Save</button>
+    <button onclick="load()">Load</button>
+    <button id="show-all-games">Alle Datensätze anzeigen</button>
+    <button id="add-new-game">Neuen Datensatz hinzufügen</button>
+    <div id="grid-container"></div>
+    <script src="script.js"></script>
 </body>
 </html>
