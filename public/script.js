@@ -110,6 +110,42 @@ function clearGrid() {
     renderGrid(currentGrid);
 }
 
+function saveGridAsJson() {
+    // Benutzer nach einer ID und einem Typ fragen
+    const id = prompt("Geben Sie eine ID für die Konfiguration ein (z.B. 'glider'):");
+    if (!id) {
+        alert("Eine ID ist erforderlich, um das JSON zu speichern.");
+        return;
+    }
+
+    const type = prompt("Geben Sie den Typ ein ('form' oder 'game'):", "form");
+    if (!type || (type !== "form" && type !== "game")) {
+        alert("Der Typ muss entweder 'form' oder 'game' sein.");
+        return;
+    }
+
+    // JSON-Objekt erstellen
+    const jsonData = {
+        _id: id,
+        type: type,
+        grid: currentGrid
+    };
+
+    // JSON-Inhalt in eine Datei umwandeln
+    const jsonString = JSON.stringify(jsonData, null, 2); // Schöner formatieren
+    const blob = new Blob([jsonString], { type: "application/json" });
+
+    // Download-Link erstellen und starten
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `${id}.json`;
+    link.click();
+
+    // Ressourcen aufräumen
+    URL.revokeObjectURL(link.href);
+    alert("Das JSON wurde erfolgreich erstellt und heruntergeladen.");
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initializeGrid();
 });
