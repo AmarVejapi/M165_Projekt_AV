@@ -27,7 +27,7 @@ function renderGrid(grid) {
   currentGrid = grid;
 }
 
-async function start() {
+async function initializeGrid() {
   const response = await fetch('/start', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -37,9 +37,8 @@ async function start() {
   renderGrid(data.grid);
 }
 
-async function next() {
-  previousGrids.push(currentGrid.map(row => [...row])); 
-
+async function generateNextState() {
+  previousGrids.push(currentGrid.map(row => [...row]));
   const response = await fetch('/next', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -49,16 +48,16 @@ async function next() {
   renderGrid(data.grid);
 }
 
-function toggleRun() {
+function toggleSimulation() {
   if (interval) {
     clearInterval(interval);
     interval = null;
   } else {
-    interval = setInterval(next, 300);
+    interval = setInterval(generateNextState, 300);
   }
 }
 
-async function save() {
+async function saveGame() {
   await fetch('/save', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -67,13 +66,13 @@ async function save() {
   alert('Spiel gespeichert!');
 }
 
-async function load() {
+async function loadGame() {
   const response = await fetch('/load');
   const data = await response.json();
   renderGrid(data.grid);
 }
 
-function previous() {
+function revertToPreviousState() {
   if (previousGrids.length > 0) {
     const lastGrid = previousGrids.pop().map(row => [...row]);
     renderGrid(lastGrid);
