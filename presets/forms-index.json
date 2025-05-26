@@ -1,0 +1,11 @@
+{
+  "_id": "_design/forms",
+  "language": "query",
+  "indexes": {
+    "by_id": {
+      "index": {
+        "fields": ["_id"]
+      }
+    }
+  }
+}

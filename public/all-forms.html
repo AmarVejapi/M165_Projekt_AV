@@ -2,38 +2,143 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Alle gespeicherten Formen</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Gespeicherte Formen</title>
     <style>
-        .form {
-          display: inline-block;
-          margin: 10px;
-          border: 1px solid #ccc;
-          padding: 5px;
+        /* Container-Layout */
+        #forms-container {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          padding: 20px;
         }
 
+        /* Form-Darstellung */
+        .form {
+          background-color: #f9f9f9;
+          border: 1px solid #ccc;
+          border-radius: 10px;
+          padding: 15px;
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease;
+        }
+
+        .form:hover {
+          transform: scale(1.02);
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Titel der Form */
+        .form p:first-of-type {
+          font-size: 18px;
+          font-weight: bold;
+          color: #00796b;
+          margin-bottom: 10px;
+          text-align: center;
+        }
+
+        /* Tabelle (Grid) */
         .form table {
+          width: 100%;
           border-collapse: collapse;
         }
 
         .form td {
           width: 10px;
           height: 10px;
-          border: 1px solid #eee;
+          border: 1px solid #ddd;
         }
 
         .form .alive {
-          background-color: black;
+          background-color: #4caf50;
+        }
+
+        /* Filter-Eingabe */
+        #filter-input {
+          display: block;
+          width: 80%;
+          max-width: 600px;
+          margin: 20px auto;
+          padding: 10px;
+          font-size: 16px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+
+        /* Fallback (keine Ergebnisse gefunden) */
+        #no-results {
+          text-align: center;
+          font-size: 16px;
+          margin-top: 20px;
+          color: #ff0000;
+          display: none; /* Initial unsichtbar */
+        }
+
+        /* Spinner (Laden von Formen) */
+        .spinner {
+          display: none;
+          margin: 20px auto;
+          width: 30px;
+          height: 30px;
+          border: 4px solid rgba(0, 0, 0, 0.1);
+          border-radius: 50%;
+          border-top-color: #00796b;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
         }
     </style>
 </head>
 <body>
-<h1>Gespeicherte Formen aus der Datenbank</h1>
-<div class="menu">
-    <button onclick="window.location.href='index.html'">Zurück</button>
-</div>
-<div id="forms-container"></div>
+    <h1>Gespeicherte Formen aus der Datenbank</h1>
+    <p style="text-align: center;">
+        Hier kannst du deine gespeicherten Formen durchsuchen. Gib einfach einen Namen oder eine passende Zeichenfolge in das Filterfeld ein.
+    </p>
+    <div class="menu">
+        <button onclick="window.location.href='index.html'"
+            onmouseover="this.style.backgroundColor='#0056b3'"
+            onmouseout="this.style.backgroundColor='#007bff'">
+            Zurück
+        </button>
+    </div>
 
-<script src="form.js"></script>
+    <label for="filter-input" style="display: none;">Formen Suche</label>
+    <input type="text" id="filter-input" placeholder="Filtere Formen nach Name..." />
+
+    <div class="spinner" id="loading-spinner"></div>
+
+    <div id="no-results">Keine Formen gefunden.</div>
+
+    <div id="forms-container"></div>
+
+    <script src="form.js"></script>
+    <script>
+        const filterInput = document.getElementById('filter-input');
+        const spinner = document.getElementById('loading-spinner');
+        const noResults = document.getElementById('no-results');
+        const formsContainer = document.getElementById('forms-container');
+
+        filterInput.addEventListener('input', () => {
+            spinner.style.display = 'block';
+            formsContainer.style.display = 'none';
+            noResults.style.display = 'none';
+
+            setTimeout(() => {
+                spinner.style.display = 'none';
+
+                if (formsContainer.children.length === 0) {
+                    noResults.style.display = 'block';
+                } else {
+                    formsContainer.style.display = 'flex';
+                }
+            }, 500);
+        });
+    </script>
 </body>
 </html>
