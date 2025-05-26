@@ -76,15 +76,16 @@ app.get('/games/:id', async (req, res) => {
 });
 
 app.get('/forms', async (req, res) => {
-  try {
-    const response = await axios.get(`${COUCHDB_URL}/${DB_NAME}/_all_docs?include_docs=true`);
-    const docs = response.data.rows
-      .map(row => row.doc)
-      .filter(doc => doc.grid);
-    res.json(docs);
-  } catch (err) {
-    res.status(500).json({ error: 'Fehler beim Abrufen der Formen.' });
-  }
+    try {
+        const response = await axios.post(`${COUCHDB_URL}/${DB_NAME}/_find`, {
+            selector: {
+                type: "form"
+            }
+        });
+        res.json(response.data.docs);
+    } catch (err) {
+        res.status(500).json({ error: 'Fehler beim Abrufen der Formen.' });
+    }
 });
 
 app.listen(PORT, () => {

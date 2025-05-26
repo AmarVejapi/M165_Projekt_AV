@@ -22,7 +22,7 @@
           max-width: 600px;
           margin: 0 auto;
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          transition: transform 0.3s ease;
+          transition: transform 0.3 s ease;
         }
 
         .form:hover {
@@ -39,20 +39,23 @@
           text-align: center;
         }
 
-        /* Tabelle (Grid) */
+        /* Tabelle (kleinere Zellen) */
         .form table {
-          width: 100%;
+          width: auto; /* Verhindert, dass die Tabelle die volle Breite einnimmt */
           border-collapse: collapse;
+          margin: 0 auto; /* Zentriere das Grid */
         }
 
         .form td {
-          width: 10px;
-          height: 10px;
-          border: 1px solid #ddd;
+          width: 15px; /* Zellenbreite */
+          height: 15px; /* Zellenhöhe */
+          border: 1px solid #ddd; /* Umrandung bleibt sichtbar */
+          padding: 0; /* Entfernt zusätzliches Padding */
+          box-sizing: border-box; /* Boxmodell beibehalten */
         }
 
         .form .alive {
-          background-color: #4caf50;
+          background-color: #4caf50; /* Grüne Zellen für lebende Elemente */
         }
 
         /* Filter-Eingabe */
@@ -98,7 +101,7 @@
 <body>
     <h1>Gespeicherte Formen aus der Datenbank</h1>
     <p style="text-align: center;">
-        Hier kannst du deine gespeicherten Formen durchsuchen. Gib einfach einen Namen oder eine passende Zeichenfolge in das Filterfeld ein.
+        Hier kannst du deine gespeicherten Formen durchsuchen. Gebe einfach einen Namen oder eine passende Zeichenfolge in das Filterfeld ein.
     </p>
     <div class="menu">
         <button onclick="window.location.href='index.html'"
