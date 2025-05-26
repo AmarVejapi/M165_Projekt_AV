@@ -50,3 +50,50 @@ async function filterForms() {
 document.getElementById('filter-input').addEventListener('input', filterForms);
 
 filterForms();
+
+function loadIn() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'application/json';
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+
+                    saveToDatabase(data, "form").then(() => {
+                        alert('Die Datei wurde erfolgreich hochgeladen und gespeichert.');
+                        location.reload();
+                    }).catch((error) => {
+                        console.error('Fehler beim Speichern in der Datenbank:', error);
+                        alert('Fehler: Die Datei konnte nicht gespeichert werden.');
+                    });
+                } catch (error) {
+                    alert('Fehler: Ungültige JSON-Datei.');
+                }
+            };
+
+            reader.onerror = () => {
+                alert('Fehler beim Lesen der Datei.');
+            };
+
+            reader.readAsText(file);
+        }
+    });
+
+    fileInput.click();
+}
+
+async function saveToDatabase(data, type) {
+    return fetch('/api/save', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data, type })
+    });
+}
