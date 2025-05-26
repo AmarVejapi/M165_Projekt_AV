@@ -1,28 +1,15 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8" />
-    <title>Game of Life</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; margin-top: 30px; }
-        table { margin: 0 auto; border-collapse: collapse; }
-        td {
-            width: 20px;
-            height: 20px;
-            border: 1px solid #ccc;
-        }
-        .alive { background-color: black; }
-    </style>
+    <meta charset="UTF-8">
+    <title>Game of Life – Startseite</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Game of Life</h1>
-    <button onclick="toggleRun()">Start/Pause</button>
-    <button onclick="next()">Next</button>
-    <button onclick="save()">Save</button>
-    <button onclick="load()">Load</button>
-    <button id="show-all-games">Alle Datensätze anzeigen</button>
-    <button id="add-new-game">Neuen Datensatz hinzufügen</button>
-    <div id="grid-container"></div>
-    <script src="script.js"></script>
+<h1>Willkommen beim Game of Life</h1>
+<div class="menu">
+    <button onclick="window.location.href='game.html'">Zur Simulation</button>
+    <button onclick="window.location.href='all-forms.html'">Alle Formen anzeigen</button>
+</div>
 </body>
 </html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Alle gespeicherten Formen</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .form {
+          display: inline-block;
+          margin: 10px;
+          border: 1px solid #ccc;
+          padding: 5px;
+        }
+
+        .form table {
+          border-collapse: collapse;
+        }
+
+        .form td {
+          width: 10px;
+          height: 10px;
+          border: 1px solid #eee;
+        }
+
+        .form .alive {
+          background-color: black;
+        }
+    </style>
+</head>
+<body>
+<h1>📚 Gespeicherte Formen aus der Datenbank</h1>
+<button onclick="window.location.href='index.html'">🏠 Zurück</button>
+<div id="forms-container"></div>
+
+<script src="forms.js"></script>
+</body>
+</html>
