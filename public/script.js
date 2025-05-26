@@ -1,5 +1,6 @@
 let currentGrid = [];
 let interval = null;
+let previousGrids = [];
 
 function renderGrid(grid) {
   const container = document.getElementById('grid-container');
@@ -37,6 +38,8 @@ async function start() {
 }
 
 async function next() {
+  previousGrids.push(currentGrid.map(row => [...row])); 
+
   const response = await fetch('/next', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -68,4 +71,13 @@ async function load() {
   const response = await fetch('/load');
   const data = await response.json();
   renderGrid(data.grid);
+}
+
+function previous() {
+  if (previousGrids.length > 0) {
+    const lastGrid = previousGrids.pop().map(row => [...row]);
+    renderGrid(lastGrid);
+  } else {
+    alert("Kein vorheriger Zustand verfügbar!");
+  }
 }
