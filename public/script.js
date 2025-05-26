@@ -2,9 +2,6 @@ let currentGrid = [];
 let interval = null;
 let previousGrids = [];
 
-let isDragging = false;
-let dragMode = null;
-
 function renderGrid(grid) {
   const container = document.getElementById('grid-container');
   container.innerHTML = '';
@@ -100,45 +97,3 @@ function clearGrid() {
         }
     }
 }
-
-function initializeDragFunctionality() {
-    const gridContainer = document.getElementById('grid-container');
-    
-    gridContainer.addEventListener('mousedown', (event) => {
-        if (event.target.tagName === 'TD') {
-            isDragging = true;
-            dragMode = !event.target.classList.contains('alive');
-            updateCellState(event.target, dragMode);
-        }
-    });
-
-    gridContainer.addEventListener('mouseover', (event) => {
-        if (isDragging && event.target.tagName === 'TD') {
-            updateCellState(event.target, dragMode);
-        }
-    });
-
-    gridContainer.addEventListener('mouseup', () => {
-        isDragging = false;
-    });
-
-    document.body.addEventListener('mouseup', () => {
-        isDragging = false;
-    });
-}
-
-function updateCellState(cell, makeAlive) {
-    if (makeAlive) {
-        cell.classList.add('alive');
-    } else {
-        cell.classList.remove('alive');
-    }
-
-    if (typeof grid !== 'undefined') {
-        const rowIndex = cell.parentNode.rowIndex;
-        const colIndex = cell.cellIndex;
-        grid[rowIndex][colIndex] = makeAlive ? 1 : 0;
-    }
-}
-
-initializeDragFunctionality();
