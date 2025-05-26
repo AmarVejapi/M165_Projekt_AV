@@ -15,13 +15,19 @@ async function loadPresets() {
     const doc = JSON.parse(content);
 
     try {
+      const existingDoc = await axios.get(`${COUCHDB_URL}/${DB_NAME}/${doc._id}`);
+      doc._rev = existingDoc.data._rev;
       await axios.put(`${COUCHDB_URL}/${DB_NAME}/${doc._id}`, doc);
-      console.log(`Preset "${doc._id}" hochgeladen.`);
+      console.log(`Preset "${doc._id}" aktualisiert.`);
     } catch (err) {
-      console.error(`Fehler bei "${doc._id}":`, err.response?.data || err.message);
+      if (err.response?.status === 404) {
+        await axios.put(`${COUCHDB_URL}/${DB_NAME}/${doc._id}`, doc);
+        console.log(`Preset "${doc._id}" erstellt.`);
+      } else {
+        console.error(`Fehler bei "${doc._id}":`, err.response?.data || err.message);
+      }
     }
   }
 }
 
 module.exports = { loadPresets };
-
