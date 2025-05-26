@@ -80,3 +80,20 @@ function revertToPreviousState() {
     alert("Kein vorheriger Zustand verfügbar!");
   }
 }
+
+function clearGrid() {
+    const gridContainer = document.getElementById('grid-container');
+    const cells = gridContainer.getElementsByTagName('td');
+
+    Array.from(cells).forEach(cell => {
+        cell.classList.remove('alive');
+    });
+
+    if (typeof grid !== 'undefined') {
+        for (let i = 0; i < grid.length; i++) {
+            for (let j = 0; j < grid[i].length; j++) {
+                grid[i][j] = 0;
+            }
+        }
+    }
+}
