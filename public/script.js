@@ -2,6 +2,9 @@ let currentGrid = [];
 let interval = null;
 let previousGrids = [];
 
+let isDragging = false;
+let dragValue = null;
+
 function renderGrid(grid) {
   const container = document.getElementById('grid-container');
   container.innerHTML = '';
@@ -13,9 +16,22 @@ function renderGrid(grid) {
       const td = document.createElement('td');
       if (cell === 1) td.classList.add('alive');
 
-      td.addEventListener('click', () => {
-        currentGrid[rIdx][cIdx] = currentGrid[rIdx][cIdx] ? 0 : 1;
+      td.addEventListener('mousedown', (event) => {
+        isDragging = true;
+        dragValue = !currentGrid[rIdx][cIdx]; // Setze den Wert, den die Zellen erhalten sollen
+        currentGrid[rIdx][cIdx] = dragValue ? 1 : 0;
         renderGrid(currentGrid);
+      });
+
+      td.addEventListener('mouseover', () => {
+        if (isDragging) {
+          currentGrid[rIdx][cIdx] = dragValue ? 1 : 0;
+          renderGrid(currentGrid);
+        }
+      });
+
+      td.addEventListener('mouseup', () => {
+        isDragging = false;
       });
 
       tr.appendChild(td);
@@ -25,6 +41,10 @@ function renderGrid(grid) {
 
   container.appendChild(table);
   currentGrid = grid;
+
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+  });
 }
 
 async function initializeGrid() {
@@ -82,18 +102,14 @@ function revertToPreviousState() {
 }
 
 function clearGrid() {
-    const gridContainer = document.getElementById('grid-container');
-    const cells = gridContainer.getElementsByTagName('td');
+    const rows = currentGrid.length;
+    const cols = currentGrid[0].length;
 
-    Array.from(cells).forEach(cell => {
-        cell.classList.remove('alive');
-    });
+    currentGrid = Array.from({ length: rows }, () => Array(cols).fill(0));
 
-    if (typeof grid !== 'undefined') {
-        for (let i = 0; i < grid.length; i++) {
-            for (let j = 0; j < grid[i].length; j++) {
-                grid[i][j] = 0;
-            }
-        }
-    }
+    renderGrid(currentGrid);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeGrid();
+});
