@@ -2,9 +2,11 @@
   "_id": "_design/forms",
   "language": "query",
   "indexes": {
-    "by_id": {
+    "by_type": {
       "index": {
-        "fields": ["_id"]
+        "fields": [
+          "type"
+        ]
       }
     }
   }
