@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Infos – Game of Life</title>
+    <link rel="stylesheet" href="style.css"/>
+    <style>
+        main {
+          max-width: 800px;
+          margin: auto;
+          text-align: left;
+          background: white;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        details {
+          margin-bottom: 1em;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          padding: 10px;
+          background-color: #f9f9f9;
+        }
+
+        summary {
+          font-weight: bold;
+          font-size: 1.2em;
+          cursor: pointer;
+          color: #00796b;
+          outline: none;
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 1em;
+        }
+
+        th, td {
+          border: 1px solid #ccc;
+          padding: 8px;
+          background: #f9f9f9;
+        }
+
+        th {
+          background: #e0f2f1;
+        }
+
+        ul {
+          padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Infos – Conway’s Game of Life</h1>
+    <div class="menu">
+        <button onclick="window.location.href='index.html'">Zurück</button>
+    </div>
+    <main>
+
+        <details open>
+            <summary>Was ist das?</summary>
+            <p>
+                "Conway’s Game of Life" ist ein sogenannter zellulärer Automat, der 1970 vom Mathematiker John Horton Conway
+                entwickelt wurde.
+                Es handelt sich um eine einfache Computersimulation auf einem Gitter, bei der jede Zelle entweder lebt oder
+                tot ist.
+                Durch wenige feste Regeln entstehen überraschend komplexe Muster – ganz ohne Eingriffe des Nutzers.
+                Das Spiel zeigt, wie aus einfachen Regeln komplexes Verhalten und Systeme entstehen können – ein
+                faszinierendes Beispiel für sogenannte "emergente Systeme".
+            </p>
+            <p>
+                <a href="https://conwaylife.com/" target="_blank">ConwayLife.com</a>
+            </p>
+            <p>
+                <a href="https://conwaylife.com/wiki/" target="_blank">LifeWiki</a>
+            </p>
+        </details>
+
+        <details>
+            <summary>Spielregeln</summary>
+            <p>Die Regeln von Conway’s Game of Life werden im <strong>B/S-Format</strong> beschrieben:</p>
+            <ul>
+                <li><strong>B (Birth)</strong>: Eine <em>tote Zelle</em> wird <em>lebendig</em>, wenn sie genau <strong>3</strong> lebende Nachbarn hat.</li>
+                <li><strong>S (Survival)</strong>: Eine <em>lebende Zelle</em> bleibt erhalten, wenn sie <strong>2 oder 3</strong> lebende Nachbarn hat.</li>
+                <li><strong>Weltenregel</strong>: Die Weltenregeln wird dann als <strong>B3/S23</strong> bezeichnet.</li>
+            </ul>
+            <p>In allen anderen Fällen bleibt die Zelle entweder tot oder stirbt.</p>
+            <p>Es ist möglich, auch mit anderen Weltenregeln zu experimentieren.</p>
+        </details>
+
+        <details>
+            <summary>Weltentypen</summary>
+            <table>
+                <thead>
+                <tr>
+                    <th>Typ</th>
+                    <th>Beschreibung</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Endlich</td>
+                    <td>Feste Ränder, Zellen am Rand haben weniger Nachbarn.</td>
+                </tr>
+                <tr>
+                    <td>Torus</td>
+                    <td>Ränder sind verbunden – wie bei Pac-Man.</td>
+                </tr>
+                <tr>
+                    <td>Unendlich</td>
+                    <td>Gitter ist theoretisch unbegrenzt gross.</td>
+                </tr>
+                </tbody>
+            </table>
+        </details>
+
+        <details>
+            <summary>Nachbarschaften</summary>
+            <p>In Game of Life gibt es verschiedene Nachbarschaftsarten, die bestimmen, welche Zellen als benachbart gelten:</p>
+            <ul>
+                <li><strong>Moore-Nachbarschaft:</strong> Eine Zelle hat 8 Nachbarn – die vier direkt angrenzenden (oben, unten, links, rechts) sowie die vier diagonal angrenzenden.</li>
+                <li><strong>Von-Neumann-Nachbarschaft:</strong> Eine Zelle hat nur 4 Nachbarn – oben, unten, links und rechts.</li>
+                <li><strong>Hexagonale Nachbarschaft:</strong> Jede Zelle hat 6 Nachbarn, da das Gitter hexagonal statt quadratisch ist.</li>
+                <li><strong>Margolus-Nachbarschaft:</strong> Das Spielfeld wird in 2×2-Blöcke unterteilt, wobei sich die Nachbarschaftsbeziehungen in jeder Generation ändern.</li>
+                <li><strong>Weighted Nachbarschaft:</strong> Nachbarn haben unterschiedliche Gewichtungen, sodass manche einen stärkeren Einfluss auf die Zelle haben als andere.</li>
+                <li><strong>Toroidale Nachbarschaft:</strong> Das Spielfeld ist an den Rändern verbunden, sodass Zellen am Rand Nachbarn auf der gegenüberliegenden Seite haben.</li>
+            </ul>
+            <p>Die Wahl der Nachbarschaft beeinflusst die Musterbildung und die Dynamik der Simulation erheblich.</p>
+        </details>
+
+        <details>
+            <summary>Bekannte Muster</summary>
+            <ul>
+                <li><strong>Stillleben:</strong> Block, Bienenstock</li>
+                <li><strong>Oszillatoren:</strong> Blinker, Toad</li>
+                <li><strong>Gleiter:</strong> Glider, LWSS</li>
+                <li><strong>Gleiterkanonen:</strong> Gosper glider gun</li>
+            </ul>
+        </details>
+    </main>
+</body>
+</html>
