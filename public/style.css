@@ -24,7 +24,7 @@ h1 {
   flex-wrap: wrap;
 }
 
-.menu button {
+.menu button, .menu a {
   font-size: 18px;
   font-weight: bold;
   padding: 15px 30px;
@@ -35,16 +35,19 @@ h1 {
   background: linear-gradient(135deg, #4caf50, #45a049);
   color: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
   transition: all 0.3s ease;
 }
 
-.menu button:hover {
+.menu button:hover, .menu a:hover {
   background: linear-gradient(135deg, #45a049, #4caf50);
   transform: scale(1.05);
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-.menu button:active {
+.menu button:active, .menu a:active {
   transform: scale(0.95);
 }
 
