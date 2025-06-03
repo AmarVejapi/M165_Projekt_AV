@@ -78,12 +78,12 @@ function toggleSimulation() {
 }
 
 async function saveGame() {
-  await fetch('/save', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ grid: currentGrid })
-  });
-  alert('Spiel gespeichert!');
+    await fetch('/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ grid: currentGrid })
+    });
+    alert('Spiel gespeichert!');
 }
 
 async function loadGame() {

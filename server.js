@@ -23,56 +23,88 @@ let game = new Game(10, 10);
 loadPresets();
 
 app.post('/start', (req, res) => {
-  const { rows, cols } = req.body;
-  game = new Game(rows, cols);
-  res.json({ grid: game.grid });
+    const { rows, cols } = req.body;
+    game = new Game(rows, cols);
+    res.json({ grid: game.grid });
 });
 
 app.post('/next', (req, res) => {
-  game.nextGeneration();
-  res.json({ grid: game.grid });
+    game.nextGeneration();
+    res.json({ grid: game.grid });
 });
 
 app.post('/save', async (req, res) => {
-  try {
-    const result = await db.saveGame(game.grid);
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+    try {
+        const result = await db.saveGame(game.grid);
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/save', async (req, res) => {
+    try {
+        const { data } = req.body;
+        if (!data._id || !data.grid) {
+          return res.status(400).json({ error: "Fehlende _id oder grid im Dokument" });
+        }
+
+        let existing = {};
+        try {
+            const resDoc = await axios.get(`${COUCHDB_URL}/${DB_NAME}/${data._id}`);
+            existing = resDoc.data;
+        } catch (err) {
+            if (err.response?.status !== 404) {
+                throw err;
+            }
+        }
+
+        const docToSave = {
+            ...data,
+            _rev: existing._rev,
+            type: "form",
+            updatedAt: new Date().toISOString()
+        };
+
+        const response = await axios.put(`${COUCHDB_URL}/${DB_NAME}/${data._id}`, docToSave);
+        res.json(response.data);
+    } catch (err) {
+        console.error('Fehler beim Speichern:', err);
+        res.status(500).json({ error: 'Fehler beim Speichern der Form.' });
+    }
 });
 
 app.get('/load', async (req, res) => {
-  try {
-    const grid = await db.loadGame();
-    game.grid = grid;
-    res.json({ grid });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+    try {
+        const grid = await db.loadGame();
+        game.grid = grid;
+        res.json({ grid });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 app.get('/games', async (req, res) => {
-  try {
-    const response = await axios.get(`${COUCHDB_URL}/${DB_NAME}/_all_docs?include_docs=true`);
-    const games = response.data.rows.map(row => ({
-      _id: row.id,
-      createdAt: row.doc.createdAt,
-      grid: row.doc.grid
-    }));
-    res.json(games);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+    try {
+        const response = await axios.get(`${COUCHDB_URL}/${DB_NAME}/_all_docs?include_docs=true`);
+        const games = response.data.rows.map(row => ({
+            _id: row.id,
+            createdAt: row.doc.createdAt,
+            grid: row.doc.grid
+        }));
+        res.json(games);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 app.get('/games/:id', async (req, res) => {
-  try {
-    const response = await axios.get(`${COUCHDB_URL}/${DB_NAME}/${req.params.id}`);
-    res.json(response.data);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+    try {
+        const response = await axios.get(`${COUCHDB_URL}/${DB_NAME}/${req.params.id}`);
+        res.json(response.data);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 });
 
 app.get('/forms', async (req, res) => {
@@ -89,5 +121,5 @@ app.get('/forms', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Game of Life Server läuft auf http://localhost:${PORT}`);
+    console.log(`Game of Life Server läuft auf http://localhost:${PORT}`);
 });
